@@ -3,6 +3,7 @@
  * Plugin Logstats - J.-F. Lalande
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author     J.-F. Lalande <jf@lalande.nom.fr>
  */
 if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__).'/../../').'/');
@@ -18,14 +19,15 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
      */
     public function register(&$controller) {
         $controller->register_hook('ACTION_HEADERS_SEND', 'BEFORE', $this, 'logPageAccess');
+        $controller->register_hook('FETCH_MEDIA_STATUS', 'BEFORE', $this, 'logMediaAccess');
     }
 
     /**
      * Logs access to a wiki page (only show mode)
      *
-     * @param  string $ID  page id of the wiki page including namespace
+     * @param Doku_Event $event
      */
-    public function logPageAccess($ID) {
+    public function logPageAccess($event) {
         global $ID;
         global $ACT;
 
@@ -46,19 +48,20 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
     }
 
     /**
-     * logs access to a media file (internally or externally)
+     * logs access to a media file
      *
-     * @param  string $media   url or dokuwiki path of media
-     * @param  string $file    full path to the media file
-     * @todo not used yet
+     * @param Doku_Event $event
      */
-    public function logMediaAccess($media, $file) {
-        if(!preg_match('#^(https?|ftp)://#i', $media))
-            $media = $this->prepareID($media);
+    public function logMediaAccess($event) {
+        // don't log external stuff
+        if(preg_match('#^(https?|ftp)://#i', $event->data['media'])) return;
 
-        $this->logAccess($media); //FIXME
+        $media  = $this->prepareID($event->data['media']);
+        $status = $event->data['status'];
+        $size   = @filesize($event->data['file']);
+
+        $this->logAccess("__media/$media", $status, $size);
     }
-
 
     /**
      * beautify a wiki page id for the log
@@ -67,7 +70,6 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
      * utf8 codes will be encoded.
      *
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
-
      * @param string $path wiki page id
      * @return mixed|string
      */
