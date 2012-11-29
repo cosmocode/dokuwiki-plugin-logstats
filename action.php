@@ -60,7 +60,7 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
         $status = $event->data['status'];
         $size   = @filesize($event->data['file']);
 
-        $this->logAccess("__media/$media", $status, $size);
+        $this->logAccess("/_media/$media", $status, $size);
     }
 
     /**

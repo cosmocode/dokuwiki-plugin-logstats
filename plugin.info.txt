@@ -1,7 +1,7 @@
 base    logstats
 author  Jean-Françcois Lalande
 email   jf@lalande.nom.fr
-date    2008-02-23
+date    2012-11-29
 name    Dokuwiki Log Stats plugin
 desc    Produces logs when a page is accessed
 url     http://sds.ensi-bourges.fr/howto/doku.php?id=wiki:logstats
