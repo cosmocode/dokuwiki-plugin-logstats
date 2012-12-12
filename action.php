@@ -118,6 +118,8 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
      * @return bool true if a log entry was written
      */
     public function logAccess($page, $status, $size, $referer = '') {
+        global $conf;
+
         $host      = $_SERVER['REMOTE_ADDR'];
         $user      = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : "-";
         $timestamp = date("[d/M/Y:H:i:s O]");
@@ -168,7 +170,17 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
             }
         }
         $logline = "$host - $user $timestamp \"$method $page $protocol\" $status $size \"$referer\" \"$agent\"\n";
-        return io_saveFile(DOKU_INC.$this->getConf('accesslog'), $logline, true);
+
+        // determine log, relative paths resolve to meta dir
+        $dir = dirname($this->getConf('accesslog'));
+        $log = basename($this->getConf('accesslog'));
+        if($dir == '.' || $dir == '' || !is_dir($dir)){
+            $dir = fullpath($conf['metadir'].'/'.$dir);
+        }
+
+        dbg($dir);
+
+        return io_saveFile("$dir/$log", $logline, true);
     }
 
 } // End of class
