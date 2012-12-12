@@ -178,8 +178,6 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
             $dir = fullpath($conf['metadir'].'/'.$dir);
         }
 
-        dbg($dir);
-
         return io_saveFile("$dir/$log", $logline, true);
     }
 
