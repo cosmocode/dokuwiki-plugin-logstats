@@ -31,7 +31,7 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
         global $ID;
         global $ACT;
 
-        if(act_clean($ACT) != 'show') return;
+        if($ACT != 'show') return;
 
         $page = $this->prepareID($ID);
 
