@@ -1,6 +1,8 @@
 <?php
 
-$lang['accesslog']     = 'Where should the access log be saved? Relative paths are relative to <code>data/meta/</code>.';
-$lang['banned_ip']     = 'Comma separated list of IPs that should not be logged.';
-$lang['banned_users']  = 'Comma separated list of user names that should not be logged.';
-$lang['banned_agents'] = 'Comma separated list of user agents that should not be logged.';
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
+ * @author Ralph Lauren Outlet Online <txmevhlcnf@hotmail.com>
+ */
+$lang['accesslog']             = 'Neither BBA Enterprises Restricted, nor the BBA LIBOR Contributor Banks,Ray Ban UK Sale, nor Reuters, is usually held liable for any irregularity or inaccuracy of BBA LIBOR. Ralph Lauren Outlet Online http://jonanddale.com/about.asp';
