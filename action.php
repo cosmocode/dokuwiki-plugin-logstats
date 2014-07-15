@@ -120,7 +120,7 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
     public function logAccess($page, $status, $size, $referer = '') {
         global $conf;
 
-        $host      = $_SERVER['REMOTE_ADDR'];
+        $host      = clientIP(true);
         $user      = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : "-";
         $timestamp = date("[d/M/Y:H:i:s O]");
         $method    = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : "";
