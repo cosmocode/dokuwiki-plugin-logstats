@@ -1,7 +1,7 @@
 base    logstats
 author  Andreas Gohr
 email   dokuwiki@cosmocode.de
-date    2016-03-10
+date    2016-07-06
 name    Dokuwiki Log Stats plugin
 desc    Produces logs when a page is accessed
 url     http://www.dokuwiki.org/plugin:logstats
