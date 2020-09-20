@@ -176,6 +176,12 @@ class action_plugin_logstats extends DokuWiki_Action_Plugin {
         $log = basename($this->getConf('accesslog'));
         if($dir == '.' || $dir == '' || !is_dir($dir)){
             $dir = fullpath($conf['metadir'].'/'.$dir);
+        } else {
+            // needed if $dir is a relative but existing path ("../../" for example)
+            // do not use fullpath(), doesn't seem to work here, probably because $_SERVER['SCRIPT_FILENAME'] is not
+            // properly defined
+            chdir($conf['metadir']);
+            $dir = realpath($dir);
         }
 
         return io_saveFile("$dir/$log", $logline, true);
